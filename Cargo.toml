@@ -1,0 +1,41 @@
+[package]
+name = "soroban_external_contract"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+doctest = false
+
+[features]
+default = ["export"]
+export = []
+testutils = ["soroban-sdk/testutils"]
+
+[patch.crates-io]
+soroban-sdk = { git = "https://github.com/stellar/rs-soroban-sdk", rev = "b4cc8fc" }
+soroban-sdk-auth = { git = "https://github.com/stellar/rs-soroban-sdk", rev = "b4cc8fc" }
+soroban-sdk-macros = { git = "https://github.com/stellar/rs-soroban-sdk", rev = "b4cc8fc" }
+soroban-env-common = { git = "https://github.com/stellar/rs-soroban-env", rev = "2c084e9d" }
+soroban-env-guest = { git = "https://github.com/stellar/rs-soroban-env", rev = "2c084e9d" }
+soroban-env-host = { git = "https://github.com/stellar/rs-soroban-env", rev = "2c084e9d" }
+soroban-env-macros = { git = "https://github.com/stellar/rs-soroban-env", rev = "2c084e9d" }
+soroban-native-sdk-macros = { git = "https://github.com/stellar/rs-soroban-env", rev = "2c084e9d" }
+stellar-xdr = { git = "https://github.com/stellar/rs-stellar-xdr", rev = "5b129da" }
+soroban-token-contract = { git = "https://github.com/stellar/soroban-token-contract", rev = "ec0903f" }
+
+[dependencies]
+soroban-sdk = "0.0.3"
+
+[dev_dependencies]
+soroban-sdk = { version = "0.0.3", features = ["testutils"] }
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+lto = true
